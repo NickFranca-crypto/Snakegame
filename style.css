@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+canvas {
+    background-color: black; /* ou #000000 */
+    margin-top: 20px;
+}
+
+h1 {
+    color: green;
+}
