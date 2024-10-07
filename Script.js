@@ -42,3 +42,36 @@ function gameOver() {
     }
     return snake[0].x < 0 || snake[0].x >= canvas.width || snake [0].y < 0 || snake [0].y >= canvas.height;
 }
+
+function update() {
+    if(gameOver()) {
+        alert("Fim de jogo! Pontuação: " + score);
+        snake = [{x: 200, y: 200 }];
+        direction = {x: 0, y: 0 };
+        score = 0;
+    }
+
+    moveSnake();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSnake();
+    drawFood();
+}
+
+window.addEventListener("keydown", function(e){
+    switch (e.key) {
+        case " ArrowUp":
+            if(direction.y === 0) direction = {x: 0, y: -20};
+            break;
+        case "ArrowDown":
+            if (direction.y === 0) direction = {x: 0, y: 20 };
+            break;
+        case "ArrowLeft":
+            if (direction.y === 0) direction = {x: -20, y: 0 };
+            break;
+        case "ArrowRight":
+            if (direction.y === 0) direction = {x: 20, y: 0 };
+            break;
+    }
+});
+
+setInterval(update, 100);
