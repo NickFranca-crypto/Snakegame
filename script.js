@@ -1,37 +1,37 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let snake = [{ X: 200, y: 200}]
-let direction = [{ X: 0, y: 0}]
-let food = [{ X: 100, y: 100}]
+let snake = [{ x: 200, y: 200 }];
+let direction = { x: 0, y: 0 };
+let food = { x: 100, y: 100 };
 let score = 0;
 
-function drawSnake(){
-    ctx.fillstyle = "lime";
-    snake.forEach(part =>{
-        ctx.fillrect(part.X, part.y, 20, 20 );
+function drawSnake() {
+    ctx.fillStyle = "lime"; // Corrigido
+    snake.forEach(part => {
+        ctx.fillRect(part.x, part.y, 20, 20); // Corrigido
     });
 }
 
-function drawFood(){
-    ctx.fillstyle = "red";
-    ctx.fillrect(food.X, food.Y, 20, 20);
+function drawFood() {
+    ctx.fillStyle = "red"; // Corrigido
+    ctx.fillRect(food.x, food.y, 20, 20); // Corrigido
 }
 
-function moveSnake (){
-    const head = {snake[0].X + direction.X, y: snake[0].y + direction.y};
+function moveSnake() {
+    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y }; // Corrigido
     snake.unshift(head);
-    if (head.x === food.x && head.y === food.y){
+    if (head.x === food.x && head.y === food.y) {
         score += 10;
         placeFood();
-    }else{
+    } else {
         snake.pop();
     }
 }
 
-function placeFood () {
-    food.x = Math.floor(Math.random()* 20) * 20;
-    food.y = Math.floor(Math.random()* 20) * 20;
+function placeFood() {
+    food.x = Math.floor(Math.random() * 20) * 20;
+    food.y = Math.floor(Math.random() * 20) * 20;
 }
 
 function gameOver() {
@@ -40,15 +40,16 @@ function gameOver() {
             return true;
         }
     }
-    return snake[0].x < 0 || snake[0].x >= canvas.width || snake [0].y < 0 || snake [0].y >= canvas.height;
+    return snake[0].x < 0 || snake[0].x >= canvas.width || snake[0].y < 0 || snake[0].y >= canvas.height;
 }
 
 function update() {
-    if(gameOver()) {
+    if (gameOver()) {
         alert("Fim de jogo! Pontuação: " + score);
-        snake = [{x: 200, y: 200 }];
-        direction = {x: 0, y: 0 };
+        snake = [{ x: 200, y: 200 }];
+        direction = { x: 0, y: 0 };
         score = 0;
+        placeFood(); // Para colocar a comida após o reinício
     }
 
     moveSnake();
@@ -57,19 +58,19 @@ function update() {
     drawFood();
 }
 
-window.addEventListener("keydown", function(e){
+window.addEventListener("keydown", function (e) {
     switch (e.key) {
-        case " ArrowUp":
-            if(direction.y === 0) direction = {x: 0, y: -20};
+        case "ArrowUp": // Corrigido
+            if (direction.y === 0) direction = { x: 0, y: -20 };
             break;
         case "ArrowDown":
-            if (direction.y === 0) direction = {x: 0, y: 20 };
+            if (direction.y === 0) direction = { x: 0, y: 20 };
             break;
         case "ArrowLeft":
-            if (direction.y === 0) direction = {x: -20, y: 0 };
+            if (direction.x === 0) direction = { x: -20, y: 0 }; // Corrigido
             break;
         case "ArrowRight":
-            if (direction.y === 0) direction = {x: 20, y: 0 };
+            if (direction.x === 0) direction = { x: 20, y: 0 }; // Corrigido
             break;
     }
 });
